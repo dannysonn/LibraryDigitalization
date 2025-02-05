@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book view</title>
+</head>
+<body>
+<h1 th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getPublicationYear()}"></h1>
+
+<hr>
+
+<form th:if="${owner == null}" th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">
+    <h3>This book is free, choose who you want to assign it to.</h3>
+    <label for="person">Choose person:</label>
+    <select th:object="${person}" th:field="*{id}" id="person">
+        <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}"></option>
+    </select>
+
+    <button type="submit">Assign book</button>
+</form>
+<div th:if="${owner != null}">
+    <h3>Book owner:</h3>
+    <p th:text="${owner}"></p>
+    <form th:method="PATCH" th:action="@{/books/{id}/free(id=${book.getId()})}">
+        <button type="submit">
+            Free book
+        </button>
+    </form>
+</div>
+
+<hr>
+
+<a th:href="@{/books/{id}/edit(id=${book.getId()})}">Edit book</a>
+<br>
+<form th:method="DELETE" th:action="@{/books/{id}/delete(id=${book.getId()})}">
+    <button type="submit">Delete book</button>
+</form>
+
+</body>
+</html>

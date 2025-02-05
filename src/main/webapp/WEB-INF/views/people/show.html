@@ -5,12 +5,24 @@
     <title>Show</title>
 </head>
 <body>
-<p th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}">VALUE</p>
+<h1 th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}">VALUE</h1>
+
+<hr>
+
+<h2>Person books:</h2>
+<div th:if="${personBooks.size() > 0}">
+    <ul>
+        <li th:each="book : ${personBooks}" th:text="${book.getAuthor() + ', ' + book.getTitle() + ', ' + book.getPublicationYear()}"></li>
+    </ul>
+</div>
+<p th:if="${personBooks.size() == 0}">The person hasn't picked up a single book yet</p>
+
+<hr>
 
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
-
+<br>
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
-    <input type="submit" value="Delete"/>
+    <button type="submit">Delete</button>
 </form>
 </body>
 </html>

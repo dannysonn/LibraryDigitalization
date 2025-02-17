@@ -1,10 +1,22 @@
 package library.digitalization.models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Book")
 public class Book {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "title")
     private String title;
+
+    @Column(name="author")
     private String author;
+
+    @Column(name="publicationyear")
     public int publicationYear;
 
     public Book() {}

@@ -1,13 +1,16 @@
 package library.digitalization.dao;
 
 import library.digitalization.models.Book;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Table;
 import java.util.List;
 
 @Component
@@ -20,9 +23,12 @@ public class BookDAO {
         this.sessionFactory = sessionFactory;
     }
 
+    @Transactional
     public List<Book> getAllBooks() {
 //        return jdbcTemplate.query("SELECT * FROM Book", new BeanPropertyRowMapper<>(Book.class));
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+
+        return session.createQuery("from Book", Book.class).list();
     }
 
     public void addBook(Book book) {

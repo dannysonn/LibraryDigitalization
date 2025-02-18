@@ -9,7 +9,7 @@
 
 <hr>
 
-<form th:if="${owner == null}" th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">
+<form th:if="${book.getOwner() == null}" th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">
     <h3>This book is free, choose who you want to assign it to.</h3>
     <label for="person">Choose person:</label>
     <select th:object="${person}" th:field="*{id}" id="person">
@@ -18,9 +18,9 @@
 
     <button type="submit">Assign book</button>
 </form>
-<div th:if="${owner != null}">
+<div th:if="${book.getOwner() != null}">
     <h3>Book owner:</h3>
-    <p th:text="${owner}"></p>
+    <p th:text="${book.getOwner().getFullName() + ', ' + book.getOwner().getYearOfBirth()}"></p>
     <form th:method="PATCH" th:action="@{/books/{id}/free(id=${book.getId()})}">
         <button type="submit">
             Free book

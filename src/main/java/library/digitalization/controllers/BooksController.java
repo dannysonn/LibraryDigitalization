@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/books")
@@ -53,12 +52,12 @@ public class BooksController {
     }
 
     @PatchMapping("/{id}")
-    public String editBook(@ModelAttribute("book") @Valid Book book, @PathVariable int id, BindingResult bindingResult) {
+    public String editBook(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "books/edit";
         }
 
-        bookDAO.updateBook(book, id);
+        bookDAO.updateBook(book);
 
         return "redirect:/books";
     }
@@ -67,7 +66,7 @@ public class BooksController {
     public String showBook(@PathVariable int id, Model model, @ModelAttribute("person") Person person) {
         model.addAttribute("people", personDAO.findAll());
         model.addAttribute("book", bookDAO.findById(id));
-        model.addAttribute("owner", bookDAO.getOwner(person.getId()));
+//        model.addAttribute("owner", bookDAO.getOwner(person.getId()));
 
         return "books/show";
     }

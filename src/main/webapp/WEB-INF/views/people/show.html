@@ -10,12 +10,13 @@
 <hr>
 
 <h2>Person books:</h2>
-<div th:if="${personBooks.size() > 0}">
+
+<div th:if="${person.getBookList().size() > 0}">
     <ul>
-        <li th:each="book : ${personBooks}" th:text="${book.getAuthor() + ', ' + book.getTitle() + ', ' + book.getPublicationYear()}"></li>
+        <li th:each="book : ${person.getBookList()}" th:text="${book.getAuthor() + ', ' + book.getTitle() + ', ' + book.getPublicationYear()}"></li>
     </ul>
 </div>
-<p th:if="${personBooks.size() == 0}">The person hasn't picked up a single book yet</p>
+<p th:if="${person.getBookList().size() == 0}">The person hasn't picked up a single book yet</p>
 
 <hr>
 
